@@ -16,6 +16,23 @@
             "email": "darkair@list.ru"
         }
     ],
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "mailtank-ru/Requests",
+                "version": "master",
+                "source": {
+                    "url": "https://github.com/mailtank-ru/Requests",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
+    "require": {
+        "mailtank-ru/Requests": "master"
+    },
     "require-dev": {
         "yiisoft/yii2": "*"
     }
