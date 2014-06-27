@@ -21,18 +21,18 @@
             "type":"package",
             "package":{
                 "name":"mailtank-ru/requests",
-                "version":"dev-master",
+                "version":"master",
                 "source":{
                     "url":"https://github.com/mailtank-ru/Requests",
                     "type":"git",
-                    "reference":"requests"
+                    "reference":"master"
                 }
             }
         }
     ],
     
     "require": {
-        "mailtank-ru/Requests": "*"
+        "mailtank-ru/Requests": "master"
     },
     "require-dev": {
         "yiisoft/yii2": "dev-master"
