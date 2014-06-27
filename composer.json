@@ -1,6 +1,6 @@
 {
-    "name": "darkair/yii-mailtank-client",
-    "description": "yii component for mailtank",
+    "name": "darkair/yii2-mailtank-client",
+    "description": "yii2 component for mailtank",
     "minimum-stability": "dev",
     "authors": [
         {
