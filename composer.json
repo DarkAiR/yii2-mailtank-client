@@ -32,7 +32,7 @@
     ],
     
     "require": {
-        "mailtank-ru/Requests": "dev-master"
+        "mailtank-ru/Requests": "*"
     },
     "require-dev": {
         "yiisoft/yii2": "dev-master"
