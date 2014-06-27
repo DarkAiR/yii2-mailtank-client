@@ -18,22 +18,14 @@
     ],
     "repositories": [
         {
-            "type": "package",
-            "package": {
-                "name": "mailtank-ru/Requests",
-                "version": "master",
-                "source": {
-                    "url": "https://github.com/mailtank-ru/Requests",
-                    "type": "git",
-                    "reference": "master"
-                }
-            }
+            "type": "vcs",
+            "url": "https://github.com/mailtank-ru/Requests"
         }
     ],
     "require": {
-        "mailtank-ru/Requests": "master"
+        "mailtank-ru/Requests": "dev-master"
     },
     "require-dev": {
-        "yiisoft/yii2": "*"
+        "yiisoft/yii2": "dev-master"
     }
 }
