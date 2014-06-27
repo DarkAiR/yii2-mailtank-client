@@ -1,5 +1,5 @@
 {
-    "name": "66ru/yii-mailtank-client",
+    "name": "darkair/yii-mailtank-client",
     "description": "yii component for mailtank",
     "minimum-stability": "dev",
     "authors": [
@@ -10,6 +10,10 @@
         {
             "name": "m8rge",
             "email": "to.merge@gmail.com"
+        },
+        {
+            "name": "DarkAiR",
+            "email": "darkair@list.ru"
         }
     ],
     "require-dev": {
