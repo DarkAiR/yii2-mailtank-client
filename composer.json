@@ -1,7 +1,10 @@
 {
     "name": "darkair/yii2-mailtank-client",
-    "description": "yii2 component for mailtank",
-    "minimum-stability": "dev",
+    "type": "yii2-extension",
+    "description": "Yii2 component for Mailtank (http://mailtank.ru)",
+    "keywords": ["yii2", "extension", "mailtank", "client"],
+    "version": "0.1.0",
+    "license": "BSD",
     "authors": [
         {
             "name": "bazilio",
