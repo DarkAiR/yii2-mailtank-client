@@ -1,48 +1,36 @@
 <?php
+
+namespace mailtank\models;
+
 /**
- * Class MailtankRecord
- * @property-read string $endpoint
- * @property-read string $isNewRecord
- * @var MailtankClient Yii::app()->mailtank
+ * Class BaseActiveRecord
  */
-abstract class MailtankRecord extends \CModel
+abstract class BaseActiveRecord extends yii\db\BaseActiveRecord
 {
     public $id;
 
     protected $url;
     protected $isNewRecord;
-    protected $crud = array(
+    protected $crud = [
         'create' => true,
         'read'   => true,
         'update' => true,
         'delete' => true
-    );
+    ];
 
-    private static $_models = array();
-
-
-    function __construct()
+    public function init()
     {
+        parent::init();
         $this->setIsNewRecord(true);
-    }
-
-    public static function model($className = __CLASS__)
-    {
-        if (isset(self::$_models[$className]))
-            return self::$_models[$className];
-        $model = self::$_models[$className] = new $className(null);
-        return $model;
     }
 
     /**
      * Returns the list of attribute names of the model.
      * @return array list of attribute names.
      */
-    public function attributeNames()
+    public function attributes()
     {
-        return array(
-            'id',
-        );
+        return ['id'];
     }
 
     /**
@@ -236,22 +224,6 @@ abstract class MailtankRecord extends \CModel
     }
 
     /**
-     * @param bool $isNewRecord
-     */
-    protected function setIsNewRecord($isNewRecord)
-    {
-        $this->isNewRecord = $isNewRecord;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getIsNewRecord()
-    {
-        return $this->isNewRecord;
-    }
-
-    /**
      * @throws MailtankException
      * @return bool
      */
@@ -268,4 +240,21 @@ abstract class MailtankRecord extends \CModel
         );
         return true;
     }
+
+    /**
+     * @param bool $isNewRecord
+     */
+    protected function setIsNewRecord($isNewRecord)
+    {
+        $this->isNewRecord = $isNewRecord;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsNewRecord()
+    {
+        return $this->isNewRecord;
+    }
+
 }

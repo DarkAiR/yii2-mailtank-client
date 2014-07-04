@@ -1,8 +1,11 @@
 <?php
+
+namespace mailtank\models;
+
 /**
  * Class MailtankLayout
  */
-class MailtankLayout extends MailtankRecord
+class MailtankLayout extends \mailtank\BaseActiveRecord
 {
     const ENDPOINT = '/layouts/';
 
@@ -38,15 +41,15 @@ class MailtankLayout extends MailtankRecord
      * Returns the list of attribute names of the model.
      * @return array list of attribute names.
      */
-    public function attributeNames()
+    public function attributes()
     {
-        return array_merge_recursive(parent::attributeNames(), array(
+        return array_merge_recursive(parent::attributes(), [
             'markup',
             'name',
             'plaintext_markup',
             'subject_markup',
             'base',
-        ));
+        ]);
     }
 
     public function delete()

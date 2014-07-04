@@ -2,11 +2,11 @@
 
 namespace mailtank;
 
-class MailtankException extends CException
+class MailtankException extends \Exception
 {
-    public $validationErrors = array();
+    public $validationErrors = [];
 
-    public function __construct($message = "", $code = 0, $validationErrors = array(), Exception $previous = null)
+    public function __construct($message = "", $code = 0, $validationErrors = [], \Exception $previous = null)
     {
         if (is_array($validationErrors) && $code == 400) {
             $this->validationErrors = $validationErrors;
