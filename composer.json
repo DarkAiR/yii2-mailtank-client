@@ -15,7 +15,7 @@
             "email": "to.merge@gmail.com"
         },
         {
-            "name": "DarkAiR",
+            "name": "Dmitry DarkAiR Romanov",
             "email": "darkair@list.ru"
         }
     ],
@@ -25,5 +25,10 @@
     },
     "require-dev": {
         "yiisoft/yii2": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "mailtank\\": ""
+        }
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace mailtank;
+
 class MailtankException extends CException
 {
     public $validationErrors = array();

@@ -1,7 +1,6 @@
 <?php
 
-Yii::setPathOfAlias('mailtank', __DIR__);
-Yii::import('mailtank.*');
+namespace mailtank
 
 class MailtankClient extends \CApplicationComponent
 {
