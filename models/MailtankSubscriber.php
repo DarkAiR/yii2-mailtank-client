@@ -70,15 +70,15 @@ class MailtankSubscriber extends MailtankRecord
      * Returns the list of attribute names of the model.
      * @return array list of attribute names.
      */
-    public function attributeNames()
+    public function attributes()
     {
-        return array_merge_recursive(parent::attributeNames(), array(
+        return array_merge_recursive(parent::attributes(), [
             'email',
             'tags',
             'url',
             'properties',
             'does_email_exist',
-        ));
+        ]);
     }
 
     /**

@@ -1,35 +1,35 @@
 <?php
 
-namespace mailtank
+namespace mailtank;
 
-class MailtankClient extends \CApplicationComponent
+use Yii;
+use Requests;
+
+class MailtankClient extends \yii\base\Object
 {
     public $host;
     public $token;
+
     /**
      * CURL option
      * @var int
      */
     public $timeout = 0;
 
-    protected $headers = array();
+    protected $headers = [];
 
 
     public function init()
     {
-        $this->headers = array(
+        $this->headers = [
             'X-Auth-Token' => $this->token,
             'Content-Type' => 'application/json',
-        );
+        ];
     }
 
-    public function sendRequest($endPoint, $fields = array(), $method = 'get', $options = array())
+    public function sendRequest($endPoint, $fields = [], $method = 'get', $options = [])
     {
-        spl_autoload_unregister(array('YiiBase', 'autoload'));
-        require_once 'requests/library/Requests.php';
-        Yii::registerAutoloader(array('Requests', 'autoloader'));
-
-        $options = array_merge_recursive(array('timeout' => $this->timeout), $options);
+        $options = array_merge_recursive(['timeout' => $this->timeout], $options);
         switch ($method) {
             case 'get':
                 $response = Requests::get(
@@ -38,30 +38,30 @@ class MailtankClient extends \CApplicationComponent
                 );
                 $returnedData = json_decode($response->body, true);
                 break;
+
             case 'delete':
                 $response = Requests::delete('http://' . $this->host . $endPoint, $this->headers, $options);
                 $returnedData = $response->body;
                 break;
+
             case 'patch':
                 $response = Requests::patch('http://' . $this->host . $endPoint, $this->headers, $fields, $options);
                 $returnedData = $response->body;
                 break;
+
             default:
                 $response = Requests::$method('http://' . $this->host . $endPoint, $this->headers, $fields, $options);
                 $returnedData = json_decode($response->body, true);
                 break;
         }
 
-        spl_autoload_register(array('YiiBase', 'autoload'));
-
         if (!$response->success) {
             $message = @json_decode($response->body, true);
             throw new MailtankException("Request failed at url: $method {$response->url}. " . print_r($message, true), $response->status_code, $message);
         }
 
-        if (is_null($returnedData)) {
-            throw new MailtankException('answer from mailtank can\'t be decoded: ' . $response->body);
-        }
+        if (is_null($returnedData))
+            throw new MailtankException('The answer from mailtank can\'t be decoded: ' . $response->body);
 
         unset($response);
         return $returnedData;

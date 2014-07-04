@@ -35,12 +35,12 @@ class MailtankBaseLayout extends MailtankRecord
      * Returns the list of attribute names of the model.
      * @return array list of attribute names.
      */
-    public function attributeNames()
+    public function attributes()
     {
-        return array_merge_recursive(parent::attributeNames(), array(
+        return array_merge_recursive(parent::attributes(), [
             'markup',
             'name',
-        ));
+        ]);
     }
 
     /**
