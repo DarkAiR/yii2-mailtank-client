@@ -1,11 +1,12 @@
 <?php
+
+namespace mailtank\models;
+
+use Yii;
+use mailtank\MailtankClient;
+
 /**
  * Class MailtankSubscriber
- *
- * @property string email
- * @property int id
- * @property array properties
- * @property array tags
  */
 class MailtankSubscriber extends MailtankRecord
 {
@@ -14,32 +15,25 @@ class MailtankSubscriber extends MailtankRecord
     protected $properties = null;       // Necessarily NULL, that empty properties worked
 
     public $email;
-    public $tags = array();
+    public $tags = [];
     public $does_email_exist = true;
-
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
-    }
 
     public function rules()
     {
-        return array(
-            array('email', 'email'),
-            array('email', 'length', 'max' => 255),
-            array('email', 'required'),
-            array('does_email_exist', 'boolean'),
-            array('id, tags, properties', 'safe'),
-        );
+        return [
+            ['email', 'email'],
+            ['email', 'string', 'max' => 255],
+            ['email', 'required'],
+            ['does_email_exist', 'boolean'],
+            [['id', 'tags', 'properties'], 'safe'],
+        ];
     }
 
     public function setProperties($properties)
     {
-        if (is_array($properties)) {
-            $this->properties = $properties;
-        } else {
+        if (!is_array($properties))
             throw new \Exception('Type error');
-        }
+        $this->properties = $properties;
     }
 
     public function getProperties()
@@ -49,20 +43,16 @@ class MailtankSubscriber extends MailtankRecord
 
     public function setProperty($key, $value)
     {
-        if (is_string($key)) {
-            $this->properties[$key] = $value;
-        } else {
-            throw new \Exception('Type error');
-        }
+        if (!is_string($key))
+            throw new \Exception('Type error');    
+        $this->properties[$key] = $value;
     }
 
     public function getProperty($key)
     {
-        if (isset($this->properties[$key])) {
+        if (isset($this->properties[$key]))
             return $this->properties[$key];
-        } else {
-            return false;
-        }
+        return false;
     }
 
 
@@ -89,15 +79,15 @@ class MailtankSubscriber extends MailtankRecord
      */
     public static function patchTags($ids, $tag)
     {
-        assert(is_array($ids) or $ids === 'all');
-        $fields = array(
+        assert(is_array($ids) || $ids === 'all');
+        $fields = [
             'action' => 'reassign_tag',
-            'data' => array(
+            'data' => [
                 'subscribers' => $ids,
                 'tag' => $tag
-            )
-        );
-        Yii::app()->mailtank->sendRequest(
+            ]
+        ];
+        Yii::$app->mailtankClient->sendRequest(
             self::ENDPOINT,
             json_encode($fields),
             'patch'

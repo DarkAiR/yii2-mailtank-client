@@ -1,4 +1,10 @@
 <?php
+
+namespace mailtank\models;
+
+use Yii;
+use mailtank\MailtankClient;
+
 /**
  * Class MailtankMailing
  */
@@ -19,29 +25,22 @@ class MailtankMailing extends MailtankRecord
     public $attachments;
 
     protected $target;
-    protected $crud = array(
+    protected $crud = [
         'create' => true,
         'read'   => true,
         'update' => false,
         'delete' => false
-    );
-
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
-    }
+    ];
 
     public function rules()
     {
-        return array(
-            array('id', 'safe'),
-            array('layout_id, context', 'safe'),
-            array('tags, subscribers, attachments', 'safe'),
-            array('layout_id, context', 'required'),
-            array('unsubscribe_link', 'url'),
-            array('unsubscribe_tags', 'unsubscribeTagValidator'),
-            array('tags_union, tags_and_receivers_union', 'boolean'),
-        );
+        return [
+            [['id', 'layout_id', 'context', 'tags', 'subscribers', 'attachments'], 'safe'],
+            [['layout_id', 'context'], 'required'],
+            [['tags_union', 'tags_and_receivers_union'], 'boolean'],
+            [['unsubscribe_link'], 'url'],
+            [['unsubscribe_tags'], 'unsubscribeTagValidator'],
+        ];
     }
 
     public function unsubscribeTagValidator($attribute, $params)
@@ -51,7 +50,6 @@ class MailtankMailing extends MailtankRecord
                 'Unsubscribe tags is required if no unsubscribe link specified');
         }
     }
-
 
     /**
      * Returns the list of attribute names of the model.
@@ -73,32 +71,24 @@ class MailtankMailing extends MailtankRecord
         ]);
     }
 
-    private static function move_param($param, & $fields)
+    private static function moveParam($param, & $fields)
     {
-        if (empty($fields[$param])) {
+        if (empty($fields[$param]))
             return;
-        }
+
         $fields['target'][$param] = $fields[$param];
         unset($fields[$param]);
     }
 
     public function beforeSendAttributes($fields)
     {
-        self::move_param('tags', $fields);
-        self::move_param('unsubscribe_tags', $fields);
-        self::move_param('unsubscribe_link', $fields);
-        self::move_param('subscribers', $fields);
-        self::move_param('tags_union', $fields);
-        self::move_param('tags_and_receivers_union', $fields);
+        self::moveParam('tags', $fields);
+        self::moveParam('unsubscribe_tags', $fields);
+        self::moveParam('unsubscribe_link', $fields);
+        self::moveParam('subscribers', $fields);
+        self::moveParam('tags_union', $fields);
+        self::moveParam('tags_and_receivers_union', $fields);
 
         return parent::beforeSendAttributes($fields);
-    }
-
-    public function beforeSave()
-    {
-        if ($this->scenario == 'update') {
-            throw new MailtankException('Update method is unsupported');
-        }
-        return parent::beforeSave();
     }
 }

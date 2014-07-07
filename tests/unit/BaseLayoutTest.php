@@ -1,5 +1,11 @@
 <?php
-class BaseLayoutTest extends Mailtank_TestCase
+
+namespace mailtank\tests\unit;
+
+use \mailtank\MailtankException;
+use \mailtank\models\MailtankBaseLayout;
+
+class BaseLayoutTest extends \PHPUnit_Framework_TestCase
 {
     private static $layoutId = false;
 
@@ -7,12 +13,11 @@ class BaseLayoutTest extends Mailtank_TestCase
     {
         $model = new MailtankBaseLayout();
         $id = uniqid();
-        $model->setAttributes(array(
-            'id' => $id,
-            'name' => 'test BaseLayoutTest '.$id,
-            'markup' => 'Hello, {{username}}! {{unsubscribe_link}}',
-        ));
-
+        $model->setAttributes([
+            'id'        => $id,
+            'name'      => 'test BaseLayoutTest '.$id,
+            'markup'    => 'Hello, {{username}}! {{unsubscribe_link}}',
+        ]);
         return $model;
     }
 
@@ -31,7 +36,11 @@ class BaseLayoutTest extends Mailtank_TestCase
         $layout = self::createBasicModel();
         $unsavedModel = clone $layout;
 
-        $this->assertTrue($layout->save());
+        $res = $layout->save();
+        if (!$res) {
+            print_r($layout->getErrors());
+            $this->assertTrue(false);
+        }
         self::$layoutId = $layout->id;
 
         $this->assertEquals($unsavedModel->id, $layout->id);
@@ -44,11 +53,15 @@ class BaseLayoutTest extends Mailtank_TestCase
     public function testGetById()
     {
         $layout = self::createBasicModel();
-        $this->assertTrue($layout->save());
+        $res = $layout->save();
+        if (!$res) {
+            print_r($layout->getErrors());
+            $this->assertTrue(false);
+        }
         self::$layoutId = $layout->id;
 
         try {
-            MailtankLayout::findByPk($layout->id);
+            MailtankBaseLayout::findByPk($layout->id);
         } catch (MailtankException $e) {
             $this->clearUnusedData();
             return;
@@ -60,7 +73,11 @@ class BaseLayoutTest extends Mailtank_TestCase
     public function testUpdate()
     {
         $layout = self::createBasicModel();
-        $this->assertTrue($layout->save());
+        $res = $layout->save();
+        if (!$res) {
+            print_r($layout->getErrors());
+            $this->assertTrue(false);
+        }
         self::$layoutId = $layout->id;
 
         try {
@@ -76,7 +93,11 @@ class BaseLayoutTest extends Mailtank_TestCase
     public function testDelete()
     {
         $layout = self::createBasicModel();
-        $this->assertTrue($layout->save());
+        $res = $layout->save();
+        if (!$res) {
+            print_r($layout->getErrors());
+            $this->assertTrue(false);
+        }
         // dont need self::$layoutId = $layout->id;
 
         try {
@@ -92,7 +113,11 @@ class BaseLayoutTest extends Mailtank_TestCase
     public function testRefresh()
     {
         $layout = self::createBasicModel();
-        $this->assertTrue($layout->save());
+        $res = $layout->save();
+        if (!$res) {
+            print_r($layout->getErrors());
+            $this->assertTrue(false);
+        }
         self::$layoutId = $layout->id;
 
         try {

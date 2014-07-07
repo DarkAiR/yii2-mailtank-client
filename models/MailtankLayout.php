@@ -2,10 +2,13 @@
 
 namespace mailtank\models;
 
+use Yii;
+use mailtank\MailtankClient;
+
 /**
  * Class MailtankLayout
  */
-class MailtankLayout extends \mailtank\BaseActiveRecord
+class MailtankLayout extends MailtankRecord
 {
     const ENDPOINT = '/layouts/';
 
@@ -15,27 +18,12 @@ class MailtankLayout extends \mailtank\BaseActiveRecord
     public $subject_markup;
     public $base;
 
-    protected $crud = array(
+    protected $crud = [
         'create' => true,
         'read'   => false,
         'update' => false,
         'delete' => true
-    );
-
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
-    }
-
-    public function rules()
-    {
-        return array(
-            array('markup', 'safe'),
-            array('name', 'length', 'max' => 60),
-            array('name, markup, subject_markup', 'required'),
-            array('id, plaintext_markup, base', 'safe'),
-        );
-    }
+    ];
 
     /**
      * Returns the list of attribute names of the model.
@@ -50,6 +38,17 @@ class MailtankLayout extends \mailtank\BaseActiveRecord
             'subject_markup',
             'base',
         ]);
+    }
+    
+    /**
+     * Rules
+     */
+    public function rules()
+    {
+        return [
+            [['name', 'markup', 'subject_markup'], 'required'],
+            [['id', 'plaintext_markup', 'base', 'markup'], 'safe'],
+        ];
     }
 
     public function delete()

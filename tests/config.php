@@ -1,16 +1,15 @@
 <?php
 
-return array(
-    'basePath' => __DIR__ . '/..',
-
-    'preload' => array('mailtank'),
+return [
+    'id' => 'Mailtank client',
+    'basePath' => __DIR__ . '/../../../..',
 
     // application components
-    'components' => array(
-        'mailtank' => array(
-            'class' => 'application.MailtankClient',
+    'components' => [
+        'mailtankClient' => [
+            'class' => 'mailtank\MailtankClient',
             'host' => $params['host'],
             'token' => $params['token'],
-        ),
-    ),
-);
+        ],
+    ],
+];

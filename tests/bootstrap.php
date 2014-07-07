@@ -1,11 +1,9 @@
 <?php
 
-$yiit = __DIR__ . '/../vendor/yiisoft/yii/framework/yiit.php';
+require(__DIR__ . '/../../../../vendor/autoload.php');
+require(__DIR__ . '/../../../../vendor/yiisoft/yii2/Yii.php');
 
-require($yiit);
 $params = include __DIR__ . '/params.php';
 $config = include __DIR__ . '/config.php';
 
-Yii::createConsoleApplication($config);
-
-require_once(__DIR__ . '/Mailtank_TestCase.php');
+$application = new yii\console\Application($config);

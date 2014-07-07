@@ -49,6 +49,7 @@ class MailtankClient extends \yii\base\Object
                 $returnedData = $response->body;
                 break;
 
+            case 'post':
             default:
                 $response = Requests::$method('http://' . $this->host . $endPoint, $this->headers, $fields, $options);
                 $returnedData = json_decode($response->body, true);

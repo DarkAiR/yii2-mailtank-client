@@ -1,4 +1,10 @@
 <?php
+
+namespace mailtank\models;
+
+use Yii;
+use mailtank\MailtankClient;
+
 /**
  * Class MailtankBaseLayout
  */
@@ -9,26 +15,20 @@ class MailtankBaseLayout extends MailtankRecord
     public $name;
     public $markup;
 
-    protected $crud = array(
+    protected $crud = [
         'create' => true,
         'read'   => false,
         'update' => false,
         'delete' => true
-    );
-
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
-    }
+    ];
 
     public function rules()
     {
-        return array(
-            array('markup', 'safe'),
-            array('name', 'length', 'max' => 60),
-            array('name, markup', 'required'),
-            array('id', 'safe'),
-        );
+        return [
+            [['id', 'markup'], 'safe'],
+            [['name', 'markup'], 'required'],
+            ['name', 'string', 'max' => 60],
+        ];
     }
 
     /**
